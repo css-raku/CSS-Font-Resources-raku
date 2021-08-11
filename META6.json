@@ -6,7 +6,7 @@
   "build-depends": [
   ],
   "depends": [
-    "CSS::Properties"
+    "CSS::Properties:ver<0.7.2+>"
   ],
   "description": "CSS Font Selection and Loading",
   "license": "Artistic-2.0",
