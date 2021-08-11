@@ -28,6 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
+          (git clone https://github.com/css-raku/CSS-Properties-raku -b css-font-loader && cd /CSS-Properties-raku && zef install .)
           zef install --deps-only .
       - name: Run Tests
         run: prove6 -I. t
