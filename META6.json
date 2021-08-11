@@ -1,0 +1,28 @@
+{
+  "auth": "cpan:WARRINGD",
+  "authors": [
+    "David Warring"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+    "CSS::Properties"
+  ],
+  "description": "CSS Font Selection and Loading",
+  "license": "Artistic-2.0",
+  "name": "CSS::Properties",
+  "perl": "6.*",
+  "provides": {
+    "CSS::Font::Loader": "lib/CSS/Font/Loader.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "git://github.com/css-raku/CSS-Font-Loader-raku.git",
+  "tags": [
+      "css", "font"
+  ],
+  "test-depends": [
+    "JSON::Fast"
+  ],
+  "version": "0.0.1"
+}
