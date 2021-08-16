@@ -1,10 +1,21 @@
 use CSS::Font;
-use JSON::Fast;
 
 unit class CSS::Font::Loader
     is CSS::Font;
 
+use CSS::Properties::Calculator :FontWeight;
+use JSON::Fast;
+use URI;
+use URI::FetchFile;
+
 has @.font-faces;
+has URI() $.base-uri = '.';
+has Bool  $.network;
+has Bool  $.local = True;
+has Str   $.fallback;
+subset FontFormat of Str where 'woff'|'woff2'|'truetype'|'opentype'|'embedded-opentype'|'svg';
+my constant %Extensions = %( :woff<woff>, :woff2<woff2>, :ttf<truetype>, :otf<opentype>, :eot<embedded-opentype>, :svg<svg>, :svg2<svg> );
+#has Set[FontFormat] $.format; # accepted font formats;
 
 method !fc-stretch {
     my constant %Stretch = %(
@@ -18,7 +29,9 @@ method !fc-stretch {
 
 #| compute a fontconfig pattern for the font
 method fontconfig-pattern {
-    my Str $pat = @.family.join: ',';
+    my Str @names = self!local-fonts();
+    @names.append: @.family;
+    my Str $pat = @names.join: ',';
 
     $pat ~= ':slant=' ~ $.style
         unless $.style eq 'normal';
@@ -34,15 +47,22 @@ method fontconfig-pattern {
     $pat;
 }
 
+method !local-fonts() {
+    @.match(@!font-faces)>>.src.grep(*.type eq 'local')>>.Slip
+}
+
 #| Return a path to a matching system font
-method find-font(Str $patt = $.fontconfig-pattern --> Str) {
+method find-font(Str $patt = $.fontconfig-pattern --> URI) {
     my $cmd =  run('fc-match',  '-f', '%{file}', $patt, :out, :err);
     given $cmd.err.slurp {
         note chomp($_) if $_;
     }
-    my $file = $cmd.out.slurp;
-    $file
-      || die "unable to resolve font-pattern: $patt"
+    if $cmd.out.slurp -> $path {
+        URI.new: "file:/$path";
+    }
+    else {
+        die "unable to resolve font-pattern: $patt"
+    }
 }
 =para Actually calls `fc-match` on `$.font-config-patterm()`
 

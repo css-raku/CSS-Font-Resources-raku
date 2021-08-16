@@ -39,6 +39,6 @@ for (
 ) {
     my $font-props = "{.key} 12pt DejaVu Sans";
     my CSS::Font::Loader $font-loader .= new: :$font-props, :@font-faces;
-    my CSS::Properties $match = $font-loader.match;
+    my CSS::Properties $match = $font-loader.match.first;
     ok $match.src.ends-with(.value);
 }
