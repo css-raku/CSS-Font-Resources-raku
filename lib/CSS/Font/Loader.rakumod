@@ -14,13 +14,14 @@ use JSON::Fast;
 use URI;
 
 has CSS::Font::Descriptor @.font-faces is built;
-has URI() $.base-url = '.';
+has URI() $.base-url is rw;
 
 method new(
-    :@font-faces,
-    |c) {
+    :@font-faces, :$base-url = '.', |c,
+) {
     my $obj = callwith(|c);
     $obj.font-faces = @font-faces;
+    $obj.base-url = $base-url;
     $obj;
 }
 
@@ -56,23 +57,25 @@ sub guess-format(Str() $_ --> FontFormat) {
     default {'other'}
 }
 
-method sources(@faces = @.match) {
+method sources(@descriptors = @.match) {
     my CSS::Font::Loader::Source @sources;
 
-    for @faces -> $css {
-        with $css.font-family -> $family {
-            if $css.src -> @srcs {
+    for @descriptors -> CSS::Font::Descriptor $font-descriptor {
+
+        with $font-descriptor.font-family -> $family {
+            if $font-descriptor.src -> @srcs {
                 for @srcs -> $src {
                     my FontFormat $format = $_ with $src[1];
-                    given $src[0].type {
+                    given $src.type {
                         when 'local' {
-                            @sources.push: CSS::Font::Loader::Source.::Local.new: :$family, :$css, :$format;
+                            $format ||= 'other';
+                            @sources.push: CSS::Font::Loader::Source::Local.new: :$family, :$font-descriptor, :$format;
                         }
                         when 'url' {
                             my URI() $url = $src[0];
                             $url .= rel2abs($!base-url);
                             $format ||= guess-format($url);
-                            @sources.push: CSS::Font::Loader::Source::URI.new: :$family, :$css, :$url, :$format;
+                            @sources.push: CSS::Font::Loader::Source::URI.new: :$family, :$font-descriptor, :$url, :$format;
                         }
                         default {
                             warn 'unknown @font-face src: ' ~ $_;

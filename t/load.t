@@ -24,8 +24,6 @@ END
 
 my CSS::Font::Descriptor @font-faces = @decls.map: -> $style {CSS::Font::Descriptor.new: :$style};
 
-my $font-props = 'italic bold condensed 10pt/12pt times-roman';
-
 for (
     "" => "Sans.ttf",
     "bold" => "-Bold.ttf",
