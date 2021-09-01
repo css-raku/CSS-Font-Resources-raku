@@ -4,18 +4,25 @@ unit class CSS::Font::Loader
     is CSS::Font;
 
 use CSS::Properties::Calculator :FontWeight;
+use CSS::Font::Descriptor;
+use CSS::Font::Loader::Source :FontFormat;
+use CSS::Font::Loader::Source::Local;
+use CSS::Font::Loader::Source::URI;
+use CSS::Module::CSS3;
+
 use JSON::Fast;
 use URI;
-use URI::FetchFile;
 
-has @.font-faces;
-has URI() $.base-uri = '.';
-has Bool  $.network;
-has Bool  $.local = True;
-has Str   $.fallback;
-subset FontFormat of Str where 'woff'|'woff2'|'truetype'|'opentype'|'embedded-opentype'|'svg';
-my constant %Extensions = %( :woff<woff>, :woff2<woff2>, :ttf<truetype>, :otf<opentype>, :eot<embedded-opentype>, :svg<svg>, :svg2<svg> );
-#has Set[FontFormat] $.format; # accepted font formats;
+has CSS::Font::Descriptor @.font-faces is built;
+has URI() $.base-url = '.';
+
+method new(
+    :@font-faces,
+    |c) {
+    my $obj = callwith(|c);
+    $obj.font-faces = @font-faces;
+    $obj;
+}
 
 method !fc-stretch {
     my constant %Stretch = %(
@@ -29,43 +36,56 @@ method !fc-stretch {
 
 #| compute a fontconfig pattern for the font
 method fontconfig-pattern {
-    my Str @names = self!local-fonts();
-    @names.append: @.family;
-    my Str $pat = @names.join: ',';
-
-    $pat ~= ':slant=' ~ $.style
-        unless $.style eq 'normal';
-
-    $pat ~= ':weight='
-    #    000  100        200   300  400     500    600      700  800       900
-      ~ <thin extralight light book regular medium semibold bold extrabold black>[$.weight.substr(0,1)]
-        unless $.weight == 400;
-
-    # [ultra|extra][condensed|expanded]
-    $pat ~= ':width=' ~ self!fc-stretch()
-        unless $.stretch eq 'normal';
-    $pat;
+    nextwith(self!local-fonts());
 }
 
 method !local-fonts() {
-    @.match(@!font-faces)>>.src.grep(*.type eq 'local')>>.Slip
+    @.match(@!font-faces)>>.src>>.grep({.type eq 'local'}).Slip;
 }
 
-#| Return a path to a matching system font
-method find-font(Str $patt = $.fontconfig-pattern --> URI) {
-    my $cmd =  run('fc-match',  '-f', '%{file}', $patt, :out, :err);
-    given $cmd.err.slurp {
-        note chomp($_) if $_;
-    }
-    if $cmd.out.slurp -> $path {
-        URI.new: "file:/$path";
-    }
-    else {
-        die "unable to resolve font-pattern: $patt"
-    }
+method match(@faces = @!font-faces) {
+    nextwith(@faces);
 }
-=para Actually calls `fc-match` on `$.font-config-patterm()`
 
-method match(@font-faces = @!font-faces) {
-    nextwith(@font-faces);
+sub guess-format(Str() $_ --> FontFormat) {
+    when .ends-with: '.ttf'   {'truetype'}
+    when .ends-with: '.otf'   {'opentype'}
+    when .ends-with: '.woff'  {'woff'}
+    when .ends-with: '.woff2' {'woff2'}
+    when .ends-with: '.svg'   {'svg'}
+    default {'other'}
+}
+
+method sources(@faces = @.match) {
+    my CSS::Font::Loader::Source @sources;
+
+    for @faces -> $css {
+        with $css.font-family -> $family {
+            if $css.src -> @srcs {
+                for @srcs -> $src {
+                    my FontFormat $format = $_ with $src[1];
+                    given $src[0].type {
+                        when 'local' {
+                            @sources.push: CSS::Font::Loader::Source.::Local.new: :$family, :$css, :$format;
+                        }
+                        when 'url' {
+                            my URI() $url = $src[0];
+                            $url .= rel2abs($!base-url);
+                            $format ||= guess-format($url);
+                            @sources.push: CSS::Font::Loader::Source::URI.new: :$family, :$css, :$url, :$format;
+                        }
+                        default {
+                            warn 'unknown @font-face src: ' ~ $_;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+##    for @.family -> $family {
+##        @sources.push: CSS::Font::Loader::Source.::Local.new: :$family, :$.css;
+##    }
+
+    @sources;
 }

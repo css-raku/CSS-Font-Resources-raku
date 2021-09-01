@@ -9,7 +9,7 @@ font-family: "DejaVu Sans";
 src: url("fonts/DejaVuSans.ttf");
 ---
 font-family: "DejaVu Sans";
-src: url("fonts/DejaVuSans-Bold.ttf");
+src: url("fonts/DejaVuSans-Bold.ttf") format(truetype);
 font-weight: bold;
 ---
 font-family: "DejaVu Sans";
@@ -37,5 +37,5 @@ for (
     my $font-props = "{.key} 12pt DejaVu Sans";
     my CSS::Font::Loader $font-loader .= new: :$font-props, :@font-faces;
     my CSS::Font::Descriptor $match = $font-loader.match.first;
-    ok $match.src.ends-with(.value);
+    ok $match.src[0].ends-with(.value);
 }

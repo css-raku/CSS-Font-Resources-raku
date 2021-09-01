@@ -6,16 +6,19 @@
   "build-depends": [
   ],
   "depends": [
-    "CSS::Properties:ver<0.7.2+>",
+    "CSS::Properties:ver<0.7.4+>",
     "URI",
     "URI::FetchFile"
   ],
   "description": "CSS Font Selection and Loading",
   "license": "Artistic-2.0",
-  "name": "CSS::Properties",
+  "name": "CSS::Font::Loader",
   "perl": "6.*",
   "provides": {
-    "CSS::Font::Loader": "lib/CSS/Font/Loader.rakumod"
+    "CSS::Font::Loader": "lib/CSS/Font/Loader.rakumod",
+    "CSS::Font::Loader::Source": "lib/CSS/Font/Loader/Source.rakumod",
+    "CSS::Font::Loader::Source::Local": "lib/CSS/Font/Loader/Source/Local.rakumod",
+    "CSS::Font::Loader::Source::URI": "lib/CSS/Font/Loader/Source/URI.rakumod"
   },
   "resources": [
   ],

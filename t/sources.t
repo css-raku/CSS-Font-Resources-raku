@@ -1,6 +1,7 @@
 use Test;
 plan 6;
 use CSS::Font::Loader;
+use CSS::Font::Loader::Source;
 use CSS::Properties;
 use CSS::Font::Descriptor;
 
@@ -36,6 +37,7 @@ for (
 ) {
     my $font-props = "{.key} 12pt DejaVu Sans";
     my CSS::Font::Loader $font-loader .= new: :$font-props, :@font-faces;
-    my CSS::Font::Descriptor $match = $font-loader.match.first;
-    ok $match.src.ends-with(.value);
+    my CSS::Font::Loader::Source @sources = $font-loader.sources;
+    todo 'tests sources';
+    flunk 'source';
 }
