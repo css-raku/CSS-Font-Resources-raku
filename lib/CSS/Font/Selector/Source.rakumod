@@ -1,4 +1,4 @@
-unit class CSS::Font::Loader::Source;
+unit class CSS::Font::Selector::Source;
 
 use CSS::Font::Descriptor;
 

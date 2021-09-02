@@ -1,7 +1,7 @@
 use Test;
 
-use CSS::Font::Loader;
-use CSS::Font::Loader::Source;
+use CSS::Font::Selector;
+use CSS::Font::Selector::Source;
 use CSS::Properties;
 use CSS::Font::Descriptor;
 
@@ -17,12 +17,12 @@ END
 my CSS::Font::Descriptor @font-faces = @decls.map: -> $style {CSS::Font::Descriptor.new: :$style};
 
 my $font-props = "12pt DejaVu Sans";
-my CSS::Font::Loader $font-loader .= new: :$font-props, :@font-faces, :base-url<t>;
+my CSS::Font::Selector $font-loader .= new: :$font-props, :@font-faces, :base-url<t>;
 
-my CSS::Font::Loader::Source @sources = $font-loader.sources;
+my CSS::Font::Selector::Source @sources = $font-loader.sources;
 is +@sources, 1;
 given @sources.head {
-    .&isa-ok: 'CSS::Font::Loader::Source::URI';
+    .&isa-ok: 'CSS::Font::Selector::Source::URI';
     .url.Str.&is: 't/fonts/DejaVuSans.ttf';
     .family.&is: 'DejaVu Sans';
     .format.&is: 'truetype';
@@ -33,7 +33,7 @@ $font-loader .= new: :$font-props, :@font-faces, :base-url<t>;
 @sources = $font-loader.sources;
 is +@sources, 1;
 given @sources.head {
-    .&isa-ok: 'CSS::Font::Loader::Source::Local';
+    .&isa-ok: 'CSS::Font::Selector::Source::Local';
     .family.&is: 'serif';
     .format.&is: 'other';
     .fontconfig-pattern.&is: 'serif:weight=bold';

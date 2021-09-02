@@ -1,13 +1,13 @@
 use CSS::Font;
 
-unit class CSS::Font::Loader
+unit class CSS::Font::Selector
     is CSS::Font;
 
 use CSS::Properties::Calculator :FontWeight;
 use CSS::Font::Descriptor;
-use CSS::Font::Loader::Source :FontFormat;
-use CSS::Font::Loader::Source::Local;
-use CSS::Font::Loader::Source::URI;
+use CSS::Font::Selector::Source :FontFormat;
+use CSS::Font::Selector::Source::Local;
+use CSS::Font::Selector::Source::URI;
 use CSS::Module::CSS3;
 
 use JSON::Fast;
@@ -58,7 +58,7 @@ sub guess-format(Str() $_ --> FontFormat) {
 }
 
 method sources(@descriptors = @.match) {
-    my CSS::Font::Loader::Source @sources;
+    my CSS::Font::Selector::Source @sources;
 
     for @descriptors -> CSS::Font::Descriptor $font-descriptor {
 
@@ -69,13 +69,13 @@ method sources(@descriptors = @.match) {
                     given $src.type {
                         when 'local' {
                             $format ||= 'other';
-                            @sources.push: CSS::Font::Loader::Source::Local.new: :$family, :$font-descriptor, :$format;
+                            @sources.push: CSS::Font::Selector::Source::Local.new: :$family, :$font-descriptor, :$format;
                         }
                         when 'url' {
                             my URI() $url = $src[0];
                             $url .= rel2abs($!base-url);
                             $format ||= guess-format($url);
-                            @sources.push: CSS::Font::Loader::Source::URI.new: :$family, :$font-descriptor, :$url, :$format;
+                            @sources.push: CSS::Font::Selector::Source::URI.new: :$family, :$font-descriptor, :$url, :$format;
                         }
                         default {
                             warn 'unknown @font-face src: ' ~ $_;
@@ -87,7 +87,7 @@ method sources(@descriptors = @.match) {
     }
 
 ##    for @.family -> $family {
-##        @sources.push: CSS::Font::Loader::Source.::Local.new: :$family, :$.css;
+##        @sources.push: CSS::Font::Selector::Source.::Local.new: :$family, :$.css;
 ##    }
 
     @sources;

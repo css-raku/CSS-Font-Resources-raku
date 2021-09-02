@@ -12,17 +12,17 @@
   ],
   "description": "CSS Font Selection and Loading",
   "license": "Artistic-2.0",
-  "name": "CSS::Font::Loader",
+  "name": "CSS::Font::Selector",
   "perl": "6.*",
   "provides": {
-    "CSS::Font::Loader": "lib/CSS/Font/Loader.rakumod",
-    "CSS::Font::Loader::Source": "lib/CSS/Font/Loader/Source.rakumod",
-    "CSS::Font::Loader::Source::Local": "lib/CSS/Font/Loader/Source/Local.rakumod",
-    "CSS::Font::Loader::Source::URI": "lib/CSS/Font/Loader/Source/URI.rakumod"
+    "CSS::Font::Selector": "lib/CSS/Font/Selector.rakumod",
+    "CSS::Font::Selector::Source": "lib/CSS/Font/Selector/Source.rakumod",
+    "CSS::Font::Selector::Source::Local": "lib/CSS/Font/Selector/Source/Local.rakumod",
+    "CSS::Font::Selector::Source::URI": "lib/CSS/Font/Selector/Source/URI.rakumod"
   },
   "resources": [
   ],
-  "source-url": "git://github.com/css-raku/CSS-Font-Loader-raku.git",
+  "source-url": "git://github.com/css-raku/CSS-Font-Selector-raku.git",
   "tags": [
       "css", "font"
   ],
