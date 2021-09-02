@@ -2,7 +2,6 @@ use Test;
 
 use CSS::Font::Selector;
 use CSS::Font::Selector::Source;
-use CSS::Properties;
 use CSS::Font::Descriptor;
 
 my @decls = q:to<END>.split: /^^'---'$$/;
@@ -16,8 +15,8 @@ END
 
 my CSS::Font::Descriptor @font-faces = @decls.map: -> $style {CSS::Font::Descriptor.new: :$style};
 
-my $font-props = "12pt DejaVu Sans";
-my CSS::Font::Selector $font-loader .= new: :$font-props, :@font-faces, :base-url<t>;
+my $font = "12pt DejaVu Sans";
+my CSS::Font::Selector $font-loader .= new: :$font, :@font-faces, :base-url<t>;
 
 my CSS::Font::Selector::Source @sources = $font-loader.sources;
 is +@sources, 1;
@@ -28,8 +27,8 @@ given @sources.head {
     .format.&is: 'truetype';
 }
 
-$font-props = "bold 12pt times roman, serif";
-$font-loader .= new: :$font-props, :@font-faces, :base-url<t>;
+$font = "bold 12pt times roman, serif";
+$font-loader .= new: :$font, :@font-faces, :base-url<t>;
 @sources = $font-loader.sources;
 is +@sources, 1;
 given @sources.head {

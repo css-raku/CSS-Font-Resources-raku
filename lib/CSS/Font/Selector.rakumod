@@ -1,7 +1,4 @@
-use CSS::Font;
-
-unit class CSS::Font::Selector
-    is CSS::Font;
+unit class CSS::Font::Selector;
 
 use CSS::Properties::Calculator :FontWeight;
 use CSS::Font::Descriptor;
@@ -12,18 +9,9 @@ use CSS::Module::CSS3;
 
 use JSON::Fast;
 use URI;
-
-has CSS::Font::Descriptor @.font-faces is built;
+has CSS::Font:D() $.font is required;
+has CSS::Font::Descriptor @.font-faces;
 has URI() $.base-url is rw;
-
-method new(
-    :@font-faces, :$base-url = '.', |c,
-) {
-    my $obj = callwith(|c);
-    $obj.font-faces = @font-faces;
-    $obj.base-url = $base-url;
-    $obj;
-}
 
 method !fc-stretch {
     my constant %Stretch = %(
@@ -36,8 +24,12 @@ method !fc-stretch {
 }
 
 #| compute a fontconfig pattern for the font
+method pattern {
+    $!font.pattern(self!local-fonts());
+}
+
 method fontconfig-pattern {
-    nextwith(self!local-fonts());
+    $!font.fontconfig-pattern(self!local-fonts());
 }
 
 method !local-fonts() {
@@ -45,7 +37,7 @@ method !local-fonts() {
 }
 
 method match(@faces = @!font-faces) {
-    nextwith(@faces);
+    $!font.match(@faces);
 }
 
 sub guess-format(Str() $_ --> FontFormat) {

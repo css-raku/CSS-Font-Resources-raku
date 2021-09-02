@@ -32,8 +32,8 @@ for (
     "bold oblique" => "-BoldOblique.ttf",
     "bold italic" => "-BoldOblique.ttf",
 ) {
-    my $font-props = "{.key} 12pt DejaVu Sans";
-    my CSS::Font::Selector $font-loader .= new: :$font-props, :@font-faces;
+    my $font = "{.key} 12pt DejaVu Sans";
+    my CSS::Font::Selector $font-loader .= new: :$font, :@font-faces;
     my CSS::Font::Descriptor $match = $font-loader.match.first;
     ok $match.src[0].ends-with(.value);
 }
