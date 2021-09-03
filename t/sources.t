@@ -35,8 +35,13 @@ is +@sources, 1;
 given @sources.head {
     .&isa-ok: 'CSS::Font::Selector::Source::Local';
     .family.&is: 'serif';
-    .format.&is: 'other';
     .fontconfig-pattern.&is: 'serif:weight=bold';
+    if %*ENV<TEST_FONT_CONFIG> {
+        # site dependant
+        lives-ok {.format};
+        .IO.&isa-ok: IO::Path;
+        .Blob.&isa-ok: Blob;
+    }
 }
 
 done-testing;

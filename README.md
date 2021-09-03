@@ -43,6 +43,9 @@ my CSS::Stylesheet $css .= parse: q:to<END>, :base-url<my/path>;
     END
 
 my CSS::Font::Selector $font-selector = $css.font-selector: "bold 12pt times roman, serif";
+# accept first true-type or open-type font
+my CSS::Font::Selector::Source @sources = $font-selector.sources;
+my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
 ```
 
 ## stand-alone
@@ -63,5 +66,8 @@ END
 my $font = "bold 12pt times roman, serif";
 my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
 my CSS::Font::Selector $font-selector .= new: :$font, :@font-face, :base-url</my/path>;
+# accept first true-type or open-type font
+my CSS::Font::Selector::Source @sources = $font-selector.sources;
+my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
 
 ```

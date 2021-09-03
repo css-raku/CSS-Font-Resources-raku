@@ -2,7 +2,7 @@ unit class CSS::Font::Selector;
 
 use CSS::Properties::Calculator :FontWeight;
 use CSS::Font::Descriptor;
-use CSS::Font::Selector::Source :FontFormat;
+use CSS::Font::Selector::Source :FontFormat, :&guess-format;
 use CSS::Font::Selector::Source::Local;
 use CSS::Font::Selector::Source::URI;
 use CSS::Module::CSS3;
@@ -40,15 +40,6 @@ method match(@faces = @!font-face) {
     $!font.match(@faces);
 }
 
-sub guess-format(Str() $_ --> FontFormat) {
-    when .ends-with: '.ttf'   {'truetype'}
-    when .ends-with: '.otf'   {'opentype'}
-    when .ends-with: '.woff'  {'woff'}
-    when .ends-with: '.woff2' {'woff2'}
-    when .ends-with: '.svg'   {'svg'}
-    default {'other'}
-}
-
 method sources(@descriptors = @.match) {
     my CSS::Font::Selector::Source @sources;
 
@@ -61,7 +52,6 @@ method sources(@descriptors = @.match) {
                     my FontFormat $format = $_ with $src[$_][1];
                     given $ref.type {
                         when 'local' {
-                            $format ||= 'other';
                             @sources.push: CSS::Font::Selector::Source::Local.new: :$family, :$font-descriptor, :$format;
                         }
                         when 'url' {

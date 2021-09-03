@@ -3,7 +3,7 @@ use CSS::Font::Selector::Source;
 unit class CSS::Font::Selector::Source::Local
     is  CSS::Font::Selector::Source;
 
-method path {
+method IO {
     with $.find-font {
         .IO;
     }
@@ -13,6 +13,6 @@ method path {
 }
 
 method Blob {
-    $.path.slurp: :bin;
+    $.IO.slurp: :bin;
 }
 
