@@ -25,6 +25,7 @@ given @sources.head {
     .url.Str.&is: 't/fonts/DejaVuSans.ttf';
     .family.&is: 'DejaVu Sans';
     .format.&is: 'truetype';
+    is-deeply .Blob, 't/fonts/DejaVuSans.ttf'.IO.slurp(:bin);
 }
 
 $font = "bold 12pt times roman, serif";

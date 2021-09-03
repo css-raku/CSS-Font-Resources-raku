@@ -7,8 +7,9 @@
   ],
   "depends": [
     "CSS::Properties:ver<0.7.4+>",
-    "URI",
-    "URI::FetchFile"
+    "Temp::Path",
+    "LWP::Simple",  
+    "URI"
   ],
   "description": "CSS Font Selection and Loading",
   "license": "Artistic-2.0",
