@@ -13,10 +13,10 @@ font-weight: bold;
 src: local(DejaVuSans-Bold);
 END
 
-my CSS::Font::Descriptor @font-faces = @decls.map: -> $style {CSS::Font::Descriptor.new: :$style};
+my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$style};
 
 my $font = "12pt DejaVu Sans";
-my CSS::Font::Selector $font-loader .= new: :$font, :@font-faces, :base-url<t>;
+my CSS::Font::Selector $font-loader .= new: :$font, :@font-face, :base-url<t>;
 
 my CSS::Font::Selector::Source @sources = $font-loader.sources;
 is +@sources, 1;
@@ -28,7 +28,7 @@ given @sources.head {
 }
 
 $font = "bold 12pt times roman, serif";
-$font-loader .= new: :$font, :@font-faces, :base-url<t>;
+$font-loader .= new: :$font, :@font-face, :base-url<t>;
 @sources = $font-loader.sources;
 is +@sources, 1;
 given @sources.head {

@@ -61,7 +61,7 @@ src: local(DejaVuSans-Bold);
 END
 
 my $font = "bold 12pt times roman, serif";
-my CSS::Font::Descriptor @font-faces = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
-my  CSS::Font::Selector $font-selector .= new: :$font, :@font-faces, :base-url</my/path>;
+my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
+my CSS::Font::Selector $font-selector .= new: :$font, :@font-face, :base-url</my/path>;
 
 ```

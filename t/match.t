@@ -22,7 +22,7 @@ font-weight: bold;
 font-style: oblique;
 END
 
-my CSS::Font::Descriptor @font-faces = @decls.map: -> $style {CSS::Font::Descriptor.new: :$style};
+my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$style};
 
 for (
     "" => "Sans.ttf",
@@ -33,7 +33,7 @@ for (
     "bold italic" => "-BoldOblique.ttf",
 ) {
     my $font = "{.key} 12pt DejaVu Sans";
-    my CSS::Font::Selector $font-loader .= new: :$font, :@font-faces;
+    my CSS::Font::Selector $font-loader .= new: :$font, :@font-face;
     my CSS::Font::Descriptor $match = $font-loader.match.first;
     ok $match.src.ends-with(.value);
 }

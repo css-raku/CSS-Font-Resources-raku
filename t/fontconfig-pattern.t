@@ -17,7 +17,7 @@ my CSS::Font::Descriptor $font-face .= new: :style("font-family:serif; src:local
 
 is-deeply $font-selector.match([$font-face]), [$font-face];
 
-$font-selector.font-faces.push: $font-face;
+$font-selector.font-face.push: $font-face;
 is $font-selector.fontconfig-pattern, 'MySerif,Georgia,serif,Times:weight=medium:width=75', 'fontconfig-pattern';
 
 

@@ -10,7 +10,7 @@ use CSS::Module::CSS3;
 use JSON::Fast;
 use URI;
 has CSS::Font:D() $.font is required;
-has CSS::Font::Descriptor @.font-faces;
+has CSS::Font::Descriptor @.font-face;
 has URI() $.base-url is rw;
 
 method !fc-stretch {
@@ -33,10 +33,10 @@ method fontconfig-pattern {
 }
 
 method !local-fonts() {
-    @.match(@!font-faces)>>.src>>.grep({.type eq 'local'}).Slip;
+    @.match(@!font-face)>>.src>>.[0]>>.grep({.type eq 'local'}).Slip;
 }
 
-method match(@faces = @!font-faces) {
+method match(@faces = @!font-face) {
     $!font.match(@faces);
 }
 
@@ -55,16 +55,17 @@ method sources(@descriptors = @.match) {
     for @descriptors -> CSS::Font::Descriptor $font-descriptor {
 
         with $font-descriptor.font-family -> $family {
-            if $font-descriptor.src -> @srcs {
-                for @srcs -> $src {
-                    my FontFormat $format = $_ with $src[1];
-                    given $src.type {
+            if $font-descriptor.src -> $src {
+                for 0 ..^ $src.elems {
+                    my $ref = $src[$_][0];
+                    my FontFormat $format = $_ with $src[$_][1];
+                    given $ref.type {
                         when 'local' {
                             $format ||= 'other';
                             @sources.push: CSS::Font::Selector::Source::Local.new: :$family, :$font-descriptor, :$format;
                         }
                         when 'url' {
-                            my URI() $url = $src[0];
+                            my URI() $url = $ref;
                             $url .= rel2abs($!base-url);
                             $format ||= guess-format($url);
                             @sources.push: CSS::Font::Selector::Source::URI.new: :$family, :$font-descriptor, :$url, :$format;
