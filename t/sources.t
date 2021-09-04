@@ -19,7 +19,7 @@ my $font = "12pt DejaVu Sans";
 my CSS::Font::Selector $font-loader .= new: :$font, :@font-face, :base-url<t>;
 
 my CSS::Font::Selector::Source @sources = $font-loader.sources;
-is +@sources, 1;
+is +@sources, 2;
 given @sources.head {
     .&isa-ok: 'CSS::Font::Selector::Source::URI';
     .url.Str.&is: 't/fonts/DejaVuSans.ttf';
@@ -31,7 +31,7 @@ given @sources.head {
 $font = "bold 12pt times roman, serif";
 $font-loader .= new: :$font, :@font-face, :base-url<t>;
 @sources = $font-loader.sources;
-is +@sources, 1;
+is +@sources, 3;
 given @sources.head {
     .&isa-ok: 'CSS::Font::Selector::Source::Local';
     .family.&is: 'serif';

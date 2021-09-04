@@ -9,7 +9,7 @@ use CSS::Module::CSS3;
 
 use JSON::Fast;
 use URI;
-has CSS::Font:D() $.font is required;
+has CSS::Font:D() $.font is required handles<family>;
 has CSS::Font::Descriptor @.font-face;
 has URI() $.base-url is rw;
 
@@ -69,9 +69,12 @@ method sources(@descriptors = @.match) {
         }
     }
 
-##    for @.family -> $family {
-##        @sources.push: CSS::Font::Selector::Source.::Local.new: :$family, :$.css;
-##    }
+    for @.family -> $family {
+        my CSS::Font::Descriptor $font-descriptor .= new;
+        $font-descriptor.css.copy($!font.css);
+        $font-descriptor.css.font-family = $family;
+        @sources.push: CSS::Font::Selector::Source::Local.new: :$family, :$font-descriptor;
+    }
 
     @sources;
 }

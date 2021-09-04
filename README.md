@@ -71,3 +71,4 @@ my CSS::Font::Selector::Source @sources = $font-selector.sources;
 my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
 
 ```
+
