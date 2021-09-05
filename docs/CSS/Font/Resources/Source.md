@@ -1,8 +1,8 @@
 [[Raku CSS Project]](https://css-raku.github.io)
- / [[CSS-Properties]](https://css-raku.github.io/CSS-Properties-raku)
- / [CSS::Font](https://css-raku.github.io/CSS-Properties-raku/CSS/Font)
- :: [Resources](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources)
- :: [Source](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources/Source)
+ / [[CSS-Font-Resources]](https://css-raku.github.io/CSS-Font-Resources-raku)
+ / [CSS::Font](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font)
+ :: [Resources](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources)
+ :: [Source](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source)
 
 class CSS::Font::Resources::Source
 ----------------------------------
@@ -14,9 +14,9 @@ Description
 
 This is an abstract base class for font descriptor source references. See also instance classes:
 
-  * [CSS::Font::Resources::Source::Local](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources/Source/Local) for `local(...)` references.
+  * [CSS::Font::Resources::Source::Local](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Local) for `local(...)` references.
 
-  * [CSS::Font::Resources::Source::Url](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources/Source/Url) for `url(...)` references.
+  * [CSS::Font::Resources::Source::Url](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Url) for `url(...)` references.
 
 Example
 -------
@@ -62,7 +62,7 @@ Returns the font-format, one of: 'woff', 'woff2', 'truetype', 'opentype', 'embed
 
 The format may be set by a `format(...)` declaration in the CSS `src` property. If this is absent, the format is guessed from the extension on the url (url sources), or matching file (local sources).
 
-### type Returns the source type 'local' ([CSS::Font::Resources::Source::Local](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources/Source/Local)), or 'url' ([CSS::Font::Resources::Source::Url](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources/Source/Url))
+### type Returns the source type 'local' ([CSS::Font::Resources::Source::Local](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Local)), or 'url' ([CSS::Font::Resources::Source::Url](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Url))
 
 ### IO
 

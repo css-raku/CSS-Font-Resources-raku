@@ -1,7 +1,7 @@
 [[Raku CSS Project]](https://css-raku.github.io)
- / [[CSS-Properties]](https://css-raku.github.io/CSS-Properties-raku)
- / [CSS::Font](https://css-raku.github.io/CSS-Properties-raku/CSS/Font)
- :: [Resources](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources)
+ / [[CSS-Font-Resources]](https://css-raku.github.io/CSS-Font-Resources-raku)
+ / [CSS::Font](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font)
+ :: [Resources](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources)
 
 class CSS::Font::Resources
 --------------------------
@@ -58,7 +58,7 @@ Return sources for matching fonts
 
   * Fonts are first matched using the `match()` method [above]
 
-  * This list is then flattened to [CSS::Font::Resources::Source::Local](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources/Source/Local) and [CSS::Font::Resources::Source::Url](https://css-raku.github.io/CSS-Properties-raku/CSS/Font/Resources/Source/Url) for `local` and `url` font references in the font descriptor's list of `src` references.
+  * This list is then flattened to [CSS::Font::Resources::Source::Local](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Local) and [CSS::Font::Resources::Source::Url](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Url) for `local` and `url` font references in the font descriptor's list of `src` references.
 
   * Fallback local references are also appended for the font's font-family list.
 

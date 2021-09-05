@@ -7,6 +7,16 @@ This is a light-weight font selector driven by CSS `@font-face` rules.
 It is integrated into the L<CSS> and L<CSS::Stylesheet> modules, but
 can also be used as a stand-alone font selector.
 
+## Classes in this distribution:
+
+- [CSS::Font::Resources](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources) - CSS Font Resources Manager
+
+- [CSS::Font::Resources::Source](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source) - CSS Font Resources abstract source
+
+  - [CSS::Font::Resources::Source::Local](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Local) - CSS Font Resources `local` source
+
+  - [CSS::Font::Resources::Source::Url](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Url) - CSS Font Resources `url` source
+
 ## Examples
 
 ## from CSS::Stylesheet
