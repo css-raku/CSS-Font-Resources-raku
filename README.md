@@ -1,11 +1,11 @@
-# CSS-Font-Selector-raku
+# CSS-Font-Resources-raku
 
 ## Description
 
-This is a light-weight CSS font selector driven `@font-face` rules.
+This is a light-weight font selector driven by CSS `@font-face` rules.
 
 It is integrated into the L<CSS> and L<CSS::Stylesheet> modules, but
-can also be used stand-alone for CSS driven font selection.
+can also be used as a stand-alone font selector.
 
 ## Examples
 
@@ -13,7 +13,7 @@ can also be used stand-alone for CSS driven font selection.
 
 ```raku
 use CSS::Stylesheet;
-use CSS::Font::Selector;
+use CSS::Font::Resources;
 
 my CSS::Stylesheet $css .= parse: q:to<END>, :base-url<my/path>;
 
@@ -42,16 +42,16 @@ my CSS::Stylesheet $css .= parse: q:to<END>, :base-url<my/path>;
     }
     END
 
-my CSS::Font::Selector $font-selector = $css.font-selector: "bold 12pt times roman, serif";
+my CSS::Font::Resources $font-selector = $css.font-selector: "bold 12pt times roman, serif";
 # accept first true-type or open-type font
-my CSS::Font::Selector::Source @sources = $font-selector.sources;
+my CSS::Font::Resources::Source @sources = $font-selector.sources;
 my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
 ```
 
 ## stand-alone
 
 ```raku
-use CSS::Font::Selector;
+use CSS::Font::Resources;
 use CSS::Font::Descriptor;
 
 my @decls = q:to<END>.split: /^^'---'$$/;
@@ -65,10 +65,11 @@ END
 
 my $font = "bold 12pt times roman, serif";
 my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
-my CSS::Font::Selector $font-selector .= new: :$font, :@font-face, :base-url</my/path>;
+my CSS::Font::Resources $font-selector .= new: :$font, :@font-face, :base-url</my/path>;
 # accept first true-type or open-type font
-my CSS::Font::Selector::Source @sources = $font-selector.sources;
+my CSS::Font::Resources::Source @sources = $font-selector.sources;
 my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
 
 ```
 
+The most important method is `sources` returns a list of matching fonts of type CSS::Font::Resources::Source.

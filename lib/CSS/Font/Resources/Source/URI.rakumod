@@ -1,7 +1,7 @@
-use CSS::Font::Selector::Source;
+use CSS::Font::Resources::Source;
 
-unit class CSS::Font::Selector::Source::URI
-    is CSS::Font::Selector::Source;
+unit class CSS::Font::Resources::Source::URI
+    is CSS::Font::Resources::Source;
 
 use URI;
 use LWP::Simple;

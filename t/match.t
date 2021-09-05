@@ -1,6 +1,6 @@
 use Test;
 plan 6;
-use CSS::Font::Selector;
+use CSS::Font::Resources;
 use CSS::Properties;
 use CSS::Font::Descriptor;
 
@@ -33,7 +33,7 @@ for (
     "bold italic" => "-BoldOblique.ttf",
 ) {
     my $font = "{.key} 12pt DejaVu Sans";
-    my CSS::Font::Selector $font-loader .= new: :$font, :@font-face;
+    my CSS::Font::Resources $font-loader .= new: :$font, :@font-face;
     my CSS::Font::Descriptor $match = $font-loader.match.first;
     ok $match.src.ends-with(.value);
 }

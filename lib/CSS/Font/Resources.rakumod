@@ -1,10 +1,10 @@
-unit class CSS::Font::Selector;
+unit class CSS::Font::Resources;
 
 use CSS::Properties::Calculator :FontWeight;
 use CSS::Font::Descriptor;
-use CSS::Font::Selector::Source :FontFormat, :&guess-format;
-use CSS::Font::Selector::Source::Local;
-use CSS::Font::Selector::Source::URI;
+use CSS::Font::Resources::Source :FontFormat, :&guess-format;
+use CSS::Font::Resources::Source::Local;
+use CSS::Font::Resources::Source::URI;
 use CSS::Module::CSS3;
 
 use JSON::Fast;
@@ -41,7 +41,7 @@ method match(@faces = @!font-face) {
 }
 
 method sources(@descriptors = @.match) {
-    my CSS::Font::Selector::Source @sources;
+    my CSS::Font::Resources::Source @sources;
 
     for @descriptors -> CSS::Font::Descriptor $font-descriptor {
 
@@ -52,13 +52,13 @@ method sources(@descriptors = @.match) {
                     my FontFormat $format = $_ with $src[$_][1];
                     given $ref.type {
                         when 'local' {
-                            @sources.push: CSS::Font::Selector::Source::Local.new: :$family, :$font-descriptor, :$format;
+                            @sources.push: CSS::Font::Resources::Source::Local.new: :$family, :$font-descriptor, :$format;
                         }
                         when 'url' {
                             my URI() $url = $ref;
                             $url .= rel2abs($!base-url);
                             $format ||= guess-format($url);
-                            @sources.push: CSS::Font::Selector::Source::URI.new: :$family, :$font-descriptor, :$url, :$format;
+                            @sources.push: CSS::Font::Resources::Source::URI.new: :$family, :$font-descriptor, :$url, :$format;
                         }
                         default {
                             warn 'unknown @font-face src: ' ~ $_;
@@ -73,7 +73,7 @@ method sources(@descriptors = @.match) {
         my CSS::Font::Descriptor $font-descriptor .= new;
         $font-descriptor.css.copy($!font.css);
         $font-descriptor.css.font-family = $family;
-        @sources.push: CSS::Font::Selector::Source::Local.new: :$family, :$font-descriptor;
+        @sources.push: CSS::Font::Resources::Source::Local.new: :$family, :$font-descriptor;
     }
 
     @sources;

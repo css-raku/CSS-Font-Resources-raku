@@ -1,7 +1,7 @@
-use CSS::Font::Selector::Source;
+use CSS::Font::Resources::Source;
 
-unit class CSS::Font::Selector::Source::Local
-    is  CSS::Font::Selector::Source;
+unit class CSS::Font::Resources::Source::Local
+    is  CSS::Font::Resources::Source;
 
 method IO {
     with $.find-font {
