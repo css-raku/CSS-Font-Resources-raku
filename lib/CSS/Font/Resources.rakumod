@@ -1,10 +1,11 @@
+#| Lightweight CSS Font Resource Manager
 unit class CSS::Font::Resources;
 
 use CSS::Properties::Calculator :FontWeight;
 use CSS::Font::Descriptor;
 use CSS::Font::Resources::Source :FontFormat, :&guess-format;
 use CSS::Font::Resources::Source::Local;
-use CSS::Font::Resources::Source::URI;
+use CSS::Font::Resources::Source::Url;
 use CSS::Module::CSS3;
 
 use JSON::Fast;
@@ -12,6 +13,18 @@ use URI;
 has CSS::Font:D() $.font is required handles<family>;
 has CSS::Font::Descriptor @.font-face;
 has URI() $.base-url is rw;
+
+=begin pod
+
+=head2 Description
+
+This is lightweight font resource manager, driven by CSS `@font-face` font descriptors.
+
+=head2 Methods
+
+=head3 
+
+=end pod
 
 method !fc-stretch {
     my constant %Stretch = %(
@@ -23,12 +36,13 @@ method !fc-stretch {
     %Stretch{$.stretch};
 }
 
-#| compute a fontconfig pattern for the font
-method pattern {
+#| compute a pattern hash for the font
+method pattern returns Hash {
     $!font.pattern(self!local-fonts());
 }
 
-method fontconfig-pattern {
+#| compute a font-config pattern string for the font
+method fontconfig-pattern returns Str {
     $!font.fontconfig-pattern(self!local-fonts());
 }
 
@@ -36,10 +50,14 @@ method !local-fonts() {
     @.match(@!font-face)>>.src>>.[0]>>.grep({.type eq 'local'}).Slip;
 }
 
-method match(@faces = @!font-face) {
-    $!font.match(@faces);
+#| Return only matching font-descriptors
+method match(@descriptors = @!font-face) {
+    $!font.match(@descriptors);
 }
+=para These are matched and ordered by preference, using the
+    L<W3C Font Matching Algorithm|https://www.w3.org/TR/2018/REC-css-fonts-3-20180920/#font-matching-algorithm>.
 
+#| Return sources for matching fonts
 method sources(@descriptors = @.match) {
     my CSS::Font::Resources::Source @sources;
 
@@ -58,7 +76,7 @@ method sources(@descriptors = @.match) {
                             my URI() $url = $ref;
                             $url .= rel2abs($!base-url);
                             $format ||= guess-format($url);
-                            @sources.push: CSS::Font::Resources::Source::URI.new: :$family, :$font-descriptor, :$url, :$format;
+                            @sources.push: CSS::Font::Resources::Source::Url.new: :$family, :$font-descriptor, :$url, :$format;
                         }
                         default {
                             warn 'unknown @font-face src: ' ~ $_;
@@ -78,3 +96,15 @@ method sources(@descriptors = @.match) {
 
     @sources;
 }
+=begin pod
+
+=item Fonts are first matched using the `match()` method [above]
+
+=item This list is then flattened to L<CSS::Font::Resources::Source::Local> and L<CSS::Font::Resources::Source::Url>
+  for `local` and `url` font references in the font descriptor's list of `src` references.
+
+=item Fallback local references are also appended for the font's font-family list.
+
+These matches are ordered by user preference. The fonts themselves can be fetched using the `.IO` or `.Blob` method
+on the first matching font.
+=end pod

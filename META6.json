@@ -9,9 +9,9 @@
     "CSS::Properties:ver<0.7.4+>",
     "Temp::Path",
     "LWP::Simple",  
-    "URI"
+    "URI:ver<0.3.2+>"
   ],
-  "description": "CSS Font Selection and Loading",
+  "description": "CSS Font Resource selection and loading",
   "license": "Artistic-2.0",
   "name": "CSS::Font::Resources",
   "perl": "6.*",
@@ -19,7 +19,7 @@
     "CSS::Font::Resources": "lib/CSS/Font/Resources.rakumod",
     "CSS::Font::Resources::Source": "lib/CSS/Font/Resources/Source.rakumod",
     "CSS::Font::Resources::Source::Local": "lib/CSS/Font/Resources/Source/Local.rakumod",
-    "CSS::Font::Resources::Source::URI": "lib/CSS/Font/Resources/Source/URI.rakumod"
+    "CSS::Font::Resources::Source::Url": "lib/CSS/Font/Resources/Source/Url.rakumod"
   },
   "resources": [
   ],

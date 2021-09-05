@@ -1,37 +1,75 @@
-## Welcome to GitHub Pages
+# CSS-Font-Resources-raku
 
-You can use the [editor on GitHub](https://github.com/css-raku/CSS-Font-Resources-raku/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+## Description
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This is a light-weight font selector driven by CSS `@font-face` rules.
 
-### Markdown
+It is integrated into the L<CSS> and L<CSS::Stylesheet> modules, but
+can also be used as a stand-alone font selector.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Examples
 
-```markdown
-Syntax highlighted code block
+## from CSS::Stylesheet
 
-# Header 1
-## Header 2
-### Header 3
+```raku
+use CSS::Stylesheet;
+use CSS::Font::Resources;
 
-- Bulleted
-- List
+my CSS::Stylesheet $css .= parse: q:to<END>, :base-url<my/path>;
 
-1. Numbered
-2. List
+    h1 {color:red}
+    h2 {color:blue}
 
-**Bold** and _Italic_ and `Code` text
+    @font-face {
+      font-family: "DejaVu Sans";
+      src: url("fonts/DejaVuSans.ttf");
+    }
+    @font-face {
+      font-family: "DejaVu Sans";
+      src: url("fonts/DejaVuSans-Bold.ttf");
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: "DejaVu Sans";
+      src: url("fonts/DejaVuSans-Oblique.ttf");
+      font-style: oblique;
+    }
+    @font-face {
+      font-family: "DejaVu Sans";
+      src: url("fonts/DejaVuSans-BoldOblique.ttf");
+      font-weight: bold;
+      font-style: oblique;
+    }
+    END
 
-[Link](url) and ![Image](src)
+my CSS::Font::Resources $font-selector = $css.font-selector: "bold 12pt times roman, serif";
+# accept first true-type or open-type font
+my CSS::Font::Resources::Source @sources = $font-selector.sources;
+my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## stand-alone
 
-### Jekyll Themes
+```raku
+use CSS::Font::Resources;
+use CSS::Font::Descriptor;
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/css-raku/CSS-Font-Resources-raku/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+my @decls = q:to<END>.split: /^^'---'$$/;
+font-family: "DejaVu Sans";
+src: url("fonts/DejaVuSans.ttf");
+---
+font-family: "serif";
+font-weight: bold;
+src: local(DejaVuSans-Bold);
+END
 
-### Support or Contact
+my $font = "bold 12pt times roman, serif";
+my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
+my CSS::Font::Resources $font-selector .= new: :$font, :@font-face, :base-url</my/path>;
+# accept first true-type or open-type font
+my CSS::Font::Resources::Source @sources = $font-selector.sources;
+my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+```
+
+The most important method is `sources` returns a list of matching fonts of type CSS::Font::Resources::Source.

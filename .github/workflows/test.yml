@@ -15,9 +15,9 @@ jobs:
         os:
           - ubuntu-latest
           - macOS-latest
-          - windows-latest
+##          - windows-latest
         raku-version:
-##          - 'latest'
+          - 'latest'
           - '2020.11'
     runs-on: ${{ matrix.os }}
     steps:
