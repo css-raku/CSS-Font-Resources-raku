@@ -29,7 +29,6 @@ jobs:
         run: |
           zef install --/test App::Prove6
           zef install --verbose JSON::Fast
-          (git clone https://github.com/css-raku/CSS-Properties-raku && cd CSS-Properties-raku && zef install .)
           zef install --deps-only .
       - name: Run Tests
         run: prove6 -I. t
