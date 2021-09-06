@@ -67,7 +67,7 @@ method sources(@descriptors = @.match) {
             if $font-descriptor.src -> $src {
                 for 0 ..^ $src.elems {
                     my $ref = $src[$_][0];
-                    my FontFormat $format = $_ with $src[$_][1];
+                    my FontFormat $format = .[0] with $src[$_][1];
                     given $ref.type {
                         when 'local' {
                             @sources.push: CSS::Font::Resources::Source::Local.new: :$family, :$font-descriptor, :$format;

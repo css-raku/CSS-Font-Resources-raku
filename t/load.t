@@ -1,5 +1,5 @@
 use Test;
-plan 6;
+plan 7;
 use CSS::Font::Resources;
 use CSS::Properties;
 use CSS::Font::Descriptor;
@@ -23,6 +23,8 @@ font-style: oblique;
 END
 
 my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$style};
+
+is @font-face[1].src[0][1][0], "truetype";
 
 for (
     "" => "Sans.ttf",
