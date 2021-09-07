@@ -38,7 +38,7 @@ compute a font-config pattern string for the font
 
 ```raku
 method match(
-    @descriptors = Code.new
+    @font-face = Code.new
 ) returns Mu
 ```
 
@@ -46,11 +46,12 @@ Return only matching font-descriptors
 
 These are matched and ordered by preference, using the [W3C Font Matching Algorithm](https://www.w3.org/TR/2018/REC-css-fonts-3-20180920/#font-matching-algorithm).
 
-### method sources
+### multi method sources
 
 ```raku
-method sources(
-    @descriptors = Code.new
+multi method sources(
+    Bool :$fallback = Bool::True,
+    |c
 ) returns Mu
 ```
 

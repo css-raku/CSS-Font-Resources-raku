@@ -10,9 +10,10 @@ use CSS::Module::CSS3;
 
 use JSON::Fast;
 use URI;
-has CSS::Font:D() $.font is required handles<family>;
+has CSS::Font:D() $.font is required;
+has $.formats = FontFormat;
 has CSS::Font::Descriptor @.font-face;
-has URI() $.base-url is rw;
+has URI() $.base-url = '.';
 
 =begin pod
 
@@ -51,23 +52,30 @@ method !local-fonts() {
 }
 
 #| Return only matching font-descriptors
-method match(@descriptors = @!font-face) {
-    $!font.match(@descriptors);
+method match(@font-face = @!font-face) {
+    $!font.match(@font-face);
 }
 =para These are matched and ordered by preference, using the
     L<W3C Font Matching Algorithm|https://www.w3.org/TR/2018/REC-css-fonts-3-20180920/#font-matching-algorithm>.
 
 #| Return sources for matching fonts
-method sources(@descriptors = @.match) {
+multi method sources(CSS::Font::Resources:U: Bool :$fallback = True, |c) {
+    self.new(|c).sources: :$fallback;
+}
+multi method sources(
+    CSS::Font::Resources:D:
+    Bool :$fallback = True,
+) {
     my CSS::Font::Resources::Source @sources;
+    my @descriptors = $!font.match(@!font-face);
 
     for @descriptors -> CSS::Font::Descriptor $font-descriptor {
 
         with $font-descriptor.font-family -> $family {
-            if $font-descriptor.src -> $src {
-                for 0 ..^ $src.elems {
-                    my $ref = $src[$_][0];
-                    my FontFormat $format = .[0] with $src[$_][1];
+            if $font-descriptor.src -> @srcs {
+                for @srcs -> $src {
+                    my $ref = $src[0];
+                    my FontFormat $format = .[0] with $src[1];
                     given $ref.type {
                         when 'local' {
                             @sources.push: CSS::Font::Resources::Source::Local.new: :$family, :$font-descriptor, :$format;
@@ -87,14 +95,16 @@ method sources(@descriptors = @.match) {
         }
     }
 
-    for @.family -> $family {
-        my CSS::Font::Descriptor $font-descriptor .= new;
-        $font-descriptor.css.copy($!font.css);
-        $font-descriptor.css.font-family = $family;
-        @sources.push: CSS::Font::Resources::Source::Local.new: :$family, :$font-descriptor;
+    if $fallback {
+        for $!font.family -> $family {
+            my CSS::Font::Descriptor $font-descriptor .= new;
+            $font-descriptor.css.copy($!font.css);
+            $font-descriptor.css.font-family = $family;
+            @sources.push: CSS::Font::Resources::Source::Local.new: :$family, :$font-descriptor;
+        }
     }
 
-    @sources;
+    @sources.grep: {.format ~~ $!formats};
 }
 =begin pod
 

@@ -44,4 +44,14 @@ given @sources.head {
     }
 }
 
+@decls = (
+  %( :font-family("DejaVu Sans"), :src<url("fonts/DejaVuSans.ttf")> ),
+  %( :font-family("DejaVu Sans"), :src<url("fonts/DejaVuSans.otf")> ),
+);
+
+@font-face = @decls.map: -> %opts {CSS::Font::Descriptor.new: |%opts};
+$font = "12pt dejavu sans";
+@sources = CSS::Font::Resources.sources: :$font, :@font-face, :!fallback, :formats('opentype'|'svg');
+is @sources.head.format, 'opentype', 'class-level source() invocation';
+
 done-testing;
