@@ -1,6 +1,8 @@
 Revision history for CSS-Font-Resources
 
 {{$NEXT}}
+
+0.0.2  2021-09-08T08:50:26+12:00
     - Add Str method. Returns a serialized URL or local path; suitable
       as a fetch-cache key.
 
