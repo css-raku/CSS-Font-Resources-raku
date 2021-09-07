@@ -13,7 +13,9 @@ local source references
 Description This class is used to represent `local` source references.
 ----------------------------------------------------------------------
 
-The IO and Blob methods resolve the font using `fc-match` from the fontconfig package.
+The `IO` and `Blob` methods resolve the font using `fc-match` from the fontconfig package.
+
+The `Str` method returns the font path.
 
 Methods This class inherits from [CSS::Font::Resources::Source](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source) and has its method available, including `font-descriptor`, `format`, `IO` and `Blob`.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -8,11 +8,10 @@ use URI;
 use LWP::Simple;
 use Temp::Path;
 
-has URI:D $.url is required;
+has URI:D $.url is required handles<Str>;
 has IO::Path $!path;
 
 method type {'url'}
-method key  {$.url.Str}
 
 method IO {
     given $!url.scheme {
@@ -56,7 +55,9 @@ method Blob {
 =head2 Description
 This class is used to represent `url` source references.
 
-The IO and Blob methods resolve the font using:
+The `Str` method returns the serialized url.
+
+The `IO` and `Blob` methods resolve the font using:
 
 =item The LWP::Simple module for `http` and `https` URI schemes
 =item Local file system for `file` and default URI schemes.

@@ -13,7 +13,9 @@ URL source references
 Description This class is used to represent `url` source references.
 --------------------------------------------------------------------
 
-The IO and Blob methods resolve the font using:
+The `Str` method returns the serialized url.
+
+The `IO` and `Blob` methods resolve the font using:
 
   * The LWP::Simple module for `http` and `https` URI schemes
 

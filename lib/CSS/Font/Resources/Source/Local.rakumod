@@ -5,17 +5,13 @@ unit class CSS::Font::Resources::Source::Local
     is  CSS::Font::Resources::Source;
 
 method type {'local'}
-has $!key;
-has $!blob;
-method key { $!key //= $.find-font }
+has $!path;
+method Str { $!path //= $.find-font }
 
 method IO {
-    with $.key {
+    do with $.Str {
         .IO;
-    }
-    else {
-        die "unable to find font";
-    }
+    } // IO::Path;
 }
 
 method Blob {
@@ -26,7 +22,9 @@ method Blob {
 =head2 Description
 This class is used to represent `local` source references.
 
-The IO and Blob methods resolve the font using `fc-match` from the fontconfig package.
+The `IO` and `Blob` methods resolve the font using `fc-match` from the fontconfig package.
+
+The `Str` method returns the font path.
 
 =head2 Methods
 This class inherits from L<CSS::Font::Resources::Source> and has its method available, including `font-descriptor`, `format`, `IO` and `Blob`.
