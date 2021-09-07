@@ -7,8 +7,8 @@
 
 This is a light-weight font selector driven by CSS `@font-face` rules.
 
-It is integrated into the L<CSS> and L<CSS::Stylesheet> modules, but
-can also be used as a stand-alone font selector.
+It is integrated into the [CSS](https://css-raku.github.io) and [CSS::Stylesheet](https://css-raku.github.io/CSS-Stylesheet-raku) modules, but
+can also be used for stand-alone font resource loading.
 
 ## Classes in this distribution:
 
@@ -78,11 +78,12 @@ src: local(DejaVuSans-Bold);
 END
 
 my $font = "bold 12pt times roman, serif";
+my $formats = 'opentype'|'truetype'; # accept first true-type or open-type font
 my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
-my CSS::Font::Resources $font-selector .= new: :$font, :@font-face, :base-url</my/path>;
+my CSS::Font::Resources $font-selector .= new: :$font, :@font-face, :base-url</my/path>, :$formats;
 # accept first true-type or open-type font
 my CSS::Font::Resources::Source @sources = $font-selector.sources;
-my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
+my Blob $font-buf = .IO with @sources.first;
 
 ```
 

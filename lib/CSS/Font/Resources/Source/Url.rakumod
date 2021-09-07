@@ -12,6 +12,7 @@ has URI:D $.url is required;
 has IO::Path $!path;
 
 method type {'url'}
+method key  {$.url.Str}
 
 method IO {
     given $!url.scheme {

@@ -5,9 +5,12 @@ unit class CSS::Font::Resources::Source::Local
     is  CSS::Font::Resources::Source;
 
 method type {'local'}
+has $!key;
+has $!blob;
+method key { $!key //= $.find-font }
 
 method IO {
-    with $.find-font {
+    with $.key {
         .IO;
     }
     else {
