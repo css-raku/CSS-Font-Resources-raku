@@ -55,10 +55,11 @@ my CSS::Stylesheet $css .= parse: q:to<END>, :base-url<my/path>;
     }
     END
 
-my CSS::Font::Resources $font-selector = $css.font-selector: "bold 12pt times roman, serif";
-# accept first true-type or open-type font
-my CSS::Font::Resources::Source @sources = $font-selector.sources;
-my Blob $font-buf = .IO with @sources.first: {.format ~~ 'opentype'|'truetype'};
+
+my $formats = 'opentype'|'truetype'; # accept first true-type or open-type font
+my $font = "bold 12pt times roman, serif";
+my CSS::Font::Resources::Source @sources = $css.font-sources($font, :$formats);
+my Blob $font-buf = .IO with @sources.first;
 ```
 
 ## stand-alone

@@ -6,9 +6,9 @@
   "build-depends": [
   ],
   "depends": [
-    "CSS::Properties:ver<0.7.4+>",
+    "CSS::Properties:ver<0.7.5+>",
     "Temp::Path",
-    "LWP::Simple",  
+    "LWP::Simple",
     "URI:ver<0.3.2+>"
   ],
   "description": "CSS Font Resource selection and loading",
@@ -25,7 +25,8 @@
   ],
   "source-url": "git://github.com/css-raku/CSS-Font-Resources-raku.git",
   "tags": [
-      "css", "font"
+    "css",
+    "font"
   ],
   "test-depends": [
     "JSON::Fast"
