@@ -16,8 +16,6 @@ This is lightweight font resource manager, driven by CSS `@font-face` font descr
 Methods
 -------
 
-### 
-
 ### method pattern
 
 ```raku

@@ -23,8 +23,6 @@ This is lightweight font resource manager, driven by CSS `@font-face` font descr
 
 =head2 Methods
 
-=head3 
-
 =end pod
 
 method !fc-stretch {
