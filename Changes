@@ -2,6 +2,7 @@ Revision history for CSS-Font-Resources
 
 {{$NEXT}}
     - Fixed font format mapping of `.pfb` files
+    - Fixed fallback font pattern
 
 0.0.2  2021-09-08T08:50:26+12:00
     - Add Str method. Returns a serialized URL or local path; suitable

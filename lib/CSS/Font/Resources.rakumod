@@ -98,6 +98,7 @@ multi method sources(
             my CSS::Font::Descriptor $font-descriptor .= new;
             $font-descriptor.css.copy($!font.css);
             $font-descriptor.css.font-family = $family;
+            $font-descriptor.setup;
             @sources.push: CSS::Font::Resources::Source::Local.new: :$family, :$font-descriptor;
         }
     }

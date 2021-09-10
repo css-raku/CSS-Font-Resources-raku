@@ -2,7 +2,7 @@ use CSS::Font::Resources::Source;
 
 #| local source references
 unit class CSS::Font::Resources::Source::Local
-    is  CSS::Font::Resources::Source;
+    is CSS::Font::Resources::Source;
 
 method type {'local'}
 has $!path;

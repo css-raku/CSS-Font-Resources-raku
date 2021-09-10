@@ -54,4 +54,11 @@ $font = "12pt dejavu sans";
 @sources = CSS::Font::Resources.sources: :$font, :@font-face, :!fallback, :formats('opentype'|'svg');
 is @sources.head.format, 'opentype', 'class-level source() invocation';
 
+
+$font = '12pt monospace';
+@sources = CSS::Font::Resources.sources: :$font, :@font-face;
+
+is +@sources, 1;
+is @sources.head.fontconfig-pattern, 'monospace';
+
 done-testing;
