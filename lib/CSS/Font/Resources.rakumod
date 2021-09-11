@@ -1,5 +1,5 @@
 #| Lightweight CSS Font Resource Manager
-unit class CSS::Font::Resources:ver<0.0.2>;
+unit class CSS::Font::Resources:ver<0.0.3>;
 
 use CSS::Properties::Calculator :FontWeight;
 use CSS::Font::Descriptor;
