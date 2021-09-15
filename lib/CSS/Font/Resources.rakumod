@@ -80,9 +80,8 @@ multi method sources(
                         }
                         when 'url' {
                             my URI() $url = $ref;
-                            $url .= rel2abs($!base-url);
                             $format ||= guess-format($url);
-                            @sources.push: CSS::Font::Resources::Source::Url.new: :$family, :$font-descriptor, :$url, :$format;
+                            @sources.push: CSS::Font::Resources::Source::Url.new: :$family, :$font-descriptor, :$format, :$url, :$!base-url;
                         }
                         default {
                             warn 'unknown @font-face src: ' ~ $_;
@@ -114,6 +113,6 @@ multi method sources(
 
 =item Fallback local references are also appended for the font's font-family list.
 
-These matches are ordered by user preference. The fonts themselves can be fetched using the `.IO` or `.Blob` method
+These matches are ordered by user preference. The fonts themselves can be fetched using the `.IO` or `.Str` or Blob methods
 on the first matching font.
 =end pod

@@ -19,6 +19,7 @@ can also be used for stand-alone font resource loading.
   - [CSS::Font::Resources::Source::Local](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Local) - CSS Font Resources `local` source
 
   - [CSS::Font::Resources::Source::Url](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/Font/Resources/Source/Url) - CSS Font Resources `url` source
+- [CSS::URI](https://css-raku.github.io/CSS-Font-Resources-raku/CSS/URI) - Lightweight object for fetchable URIs.
 
 ## Examples
 
@@ -77,9 +78,9 @@ font-weight: bold;
 src: local(DejaVuSans-Bold);
 END
 
+my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
 my $font = "bold 12pt times roman, serif";
 my $formats = 'opentype'|'truetype'; # accept first true-type or open-type font
-my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
 my CSS::Font::Resources $font-selector .= new: :$font, :@font-face, :base-url</my/path>, :$formats;
 # accept first true-type or open-type font
 my CSS::Font::Resources::Source @sources = $font-selector.sources;

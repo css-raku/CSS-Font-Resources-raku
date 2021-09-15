@@ -61,5 +61,5 @@ Return sources for matching fonts
 
   * Fallback local references are also appended for the font's font-family list.
 
-These matches are ordered by user preference. The fonts themselves can be fetched using the `.IO` or `.Blob` method on the first matching font.
+These matches are ordered by user preference. The fonts themselves can be fetched using the `.IO` or `.Str` or Blob methods on the first matching font.
 

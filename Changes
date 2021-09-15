@@ -1,6 +1,7 @@
 Revision history for CSS-Font-Resources
 
 {{$NEXT}}
+    - Add CSS::URI; factored out of CSS::Font::Resources::Source::URI
 
 0.0.3  2021-09-11T11:59:51+12:00
     - Fixed font format mapping of `.pfb` files

@@ -7,7 +7,7 @@ my constant %Extensions = %( :woff<woff>, :woff2<woff2>, 'ttf'|'ttc' => 'truetyp
 subset FontFormat is export(:FontFormat) of Str where 'woff'|'woff2'|'truetype'|'opentype'|'embedded-opentype'|'postscript'|'svg'|'cff'|Str:U;
 subset WebFontFormat of FontFormat where 'woff'|'woff2'|'truetype'|'opentype'|'embedded-opentype'|'svg'|Str:U;
 
-has CSS::Font::Descriptor:D $.font-descriptor is required handles<font-family fontconfig-pattern find-font>;
+has CSS::Font::Descriptor:D $.font-descriptor is required handles<font-family fontconfig-pattern find-font Str>;
 has FontFormat $.format;
 has Str:D $.family is required;
 
@@ -20,11 +20,6 @@ sub guess-format(Str:D() $_ --> FontFormat) is export(:guess-format) {
 method format {
     $!format //= guess-format(self.IO.path);
 }
-
-method key {...}
-method IO returns IO::Path {...}
-method Blob returns Buf {...}
-method type returns Str {...}
 
 =begin pod
 

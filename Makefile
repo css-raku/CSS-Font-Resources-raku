@@ -14,7 +14,8 @@ $(DocLinker) :
 	(cd .. && git clone $(DocRepo) $(DocProj))
 
 doc : $(DocLinker) docs/index.md docs/CSS/Font/Resources.md docs/CSS/Font/Resources/Source.md \
-                   docs/CSS/Font/Resources/Source/Local.md docs/CSS/Font/Resources/Source/Url.md
+                   docs/CSS/Font/Resources/Source/Local.md docs/CSS/Font/Resources/Source/Url.md \
+                   docs/CSS/URI.md
 
 docs/index.md : README.md
 	cp $< $@

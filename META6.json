@@ -19,7 +19,8 @@
     "CSS::Font::Resources": "lib/CSS/Font/Resources.rakumod",
     "CSS::Font::Resources::Source": "lib/CSS/Font/Resources/Source.rakumod",
     "CSS::Font::Resources::Source::Local": "lib/CSS/Font/Resources/Source/Local.rakumod",
-    "CSS::Font::Resources::Source::Url": "lib/CSS/Font/Resources/Source/Url.rakumod"
+    "CSS::Font::Resources::Source::Url": "lib/CSS/Font/Resources/Source/Url.rakumod",
+    "CSS::URI": "lib/CSS/URI.rakumod"
   },
   "resources": [
   ],
