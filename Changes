@@ -1,6 +1,8 @@
 Revision history for CSS-Font-Resources
 
 {{$NEXT}}
+
+0.0.4  2021-09-16T16:15:04+12:00
     - Add CSS::URI; factored out of CSS::Font::Resources::Source::URI
 
 0.0.3  2021-09-11T11:59:51+12:00
