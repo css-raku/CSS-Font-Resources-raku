@@ -38,8 +38,8 @@ given @sources.head {
 
 $font = "bold 12pt times roman, serif";
 $font-loader .= new: :$font, :@font-face, :base-url<t>;
-@sources = $font-loader.sources;
-is +@sources, 3;
+@sources = $font-loader.sources: :!fallback;
+is +@sources, 1;
 given @sources.head {
     .&isa-ok: 'CSS::Font::Resources::Source::Local';
     .family.&is: 'serif';
@@ -62,11 +62,12 @@ $font = "12pt dejavu sans";
 @sources = CSS::Font::Resources.sources: :$font, :@font-face, :!fallback, :formats('opentype'|'svg');
 is @sources.head.format, 'opentype', 'class-level source() invocation';
 
+if %*ENV<TEST_FONT_CONFIG> {
+    $font = '12pt monospace';
+    @sources = CSS::Font::Resources.sources: :$font, :@font-face;
 
-$font = '12pt monospace';
-@sources = CSS::Font::Resources.sources: :$font, :@font-face;
-
-is +@sources, 1;
-is @sources.head.fontconfig-pattern, 'monospace';
+    is +@sources, 1;
+    is @sources.head.fontconfig-pattern, 'monospace';
+}
 
 done-testing;
