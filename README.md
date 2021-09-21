@@ -29,7 +29,7 @@ can also be used for stand-alone font resource loading.
 use CSS::Stylesheet;
 use CSS::Font::Resources;
 
-my CSS::Stylesheet $css .= parse: q:to<END>, :base-url<my/path>;
+my CSS::Stylesheet $css .= parse: q:to<END>, :base-url<my/path/>;
 
     h1 {color:red}
     h2 {color:blue}
@@ -81,11 +81,11 @@ END
 my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descriptor.new: :$font};
 my $font = "bold 12pt times roman, serif";
 my $formats = 'opentype'|'truetype'; # accept first true-type or open-type font
-my CSS::Font::Resources $font-selector .= new: :$font, :@font-face, :base-url</my/path>, :$formats;
+my CSS::Font::Resources $font-selector .= new: :$font, :@font-face, :base-url</my/path/>, :$formats;
 # accept first true-type or open-type font
 my CSS::Font::Resources::Source @sources = $font-selector.sources;
 my Blob $font-buf = .IO with @sources.first;
 
 ```
 
-The most important method is `sources` returns a list of matching fonts of type CSS::Font::Resources::Source.
+The most important method is `sources` which returns a list of matching fonts of type CSS::Font::Resources::Source, ordered by preference.
