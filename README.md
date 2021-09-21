@@ -73,7 +73,7 @@ my @decls = q:to<END>.split: /^^'---'$$/;
 font-family: "DejaVu Sans";
 src: url("fonts/DejaVuSans.ttf");
 ---
-font-family: "serif";
+font-family: serif;
 font-weight: bold;
 src: local(DejaVuSans-Bold);
 END

@@ -18,8 +18,16 @@ my CSS::Font::Descriptor @font-face = @decls.map: -> $style {CSS::Font::Descript
 my $font = "12pt DejaVu Sans";
 my CSS::Font::Resources $font-loader .= new: :$font, :@font-face, :base-url<t>;
 
-my CSS::Font::Resources::Source @sources = $font-loader.sources;
-is +@sources, 2;
+my CSS::Font::Resources::Source @sources;
+@sources = $font-loader.sources: :!fallback;
+is +@sources, 1, 'sources without fallback';
+
+if %*ENV<TEST_FONT_CONFIG> {
+        # site dependant
+    @sources = $font-loader.sources;
+    is +@sources, 2, 'sources with fallback';
+}
+
 given @sources.head {
     .&isa-ok: 'CSS::Font::Resources::Source::Url';
     .url.Str.&is: 't/fonts/DejaVuSans.ttf';

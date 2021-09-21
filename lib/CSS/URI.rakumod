@@ -10,7 +10,7 @@ role X {
     use LWP::Simple;
     use Temp::Path;
 
-    has URI:D() $.url is required;
+    has URI:D() $.url is required handles<Str>;
     has IO::Path $!path;
 
     submethod TWEAK(URI() :$base-url) {
