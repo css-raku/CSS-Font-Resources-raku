@@ -60,9 +60,9 @@ role X {
         given $!url.scheme {
             when 'file'|'' {
                 if $!url.host -> $host {
-                    die "unable to fetch {$!url.Str} from host: $host"
+                    die "file fetch from host is nyi: {$!url.Str}";
                 }
-                $!url.path.Str.IO.slurp;
+                self.IO.slurp;
             }
             when 'http'|'https' {
                 LWP::Simple.get: $!url;

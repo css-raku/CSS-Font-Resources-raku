@@ -9,7 +9,7 @@
     "CSS::Properties:ver<0.7.5+>",
     "Temp::Path",
     "LWP::Simple",
-    "URI:ver<0.3.2+>"
+    "URI:ver<0.3.3+>"
   ],
   "description": "CSS Font Resource selection and loading",
   "license": "Artistic-2.0",

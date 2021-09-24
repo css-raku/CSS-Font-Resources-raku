@@ -13,7 +13,7 @@ use URI;
 has CSS::Font:D() $.font is required;
 has $.formats = FontFormat;
 has CSS::Font::Descriptor @.font-face;
-has URI() $.base-url = '.';
+has URI() $.base-url = './';
 
 =begin pod
 
