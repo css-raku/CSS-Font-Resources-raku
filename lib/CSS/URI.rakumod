@@ -20,10 +20,7 @@ role X {
     method Blob {
         given $!url.scheme {
             when 'file'|'' {
-                if $!url.host -> $host {
-                    die "unable to fetch {$!url.Str} from host: $host"
-                }
-                $!url.path.Str.IO.slurp: :bin;
+                $.IO.slurp: :bin;
             }
             when 'http'|'https' {
                 temp LWP::Simple.force_no_encoding = True;
