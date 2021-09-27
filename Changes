@@ -3,8 +3,8 @@ Revision history for CSS-Font-Resources
 {{$NEXT}}
 
 0.0.5  2021-09-25T08:26:47+12:00
-    - Bypass fontconfig depedent tests by default. Setting $TEST_FONT_CONFIG
-      reenables these tests. This is sufficient for tests to pass on Windows.
+    - Bypass fontconfig dependent tests by default. Setting $TEST_FONT_CONFIG
+      re-enables these tests. This is sufficient for tests to pass on Windows.
 
 0.0.4  2021-09-16T16:15:04+12:00
     - Add CSS::URI; factored out of CSS::Font::Resources::Source::URI

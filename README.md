@@ -84,7 +84,7 @@ my $formats = 'opentype'|'truetype'; # accept first true-type or open-type font
 my CSS::Font::Resources $font-selector .= new: :$font, :@font-face, :base-url</my/path/>, :$formats;
 # accept first true-type or open-type font
 my CSS::Font::Resources::Source @sources = $font-selector.sources;
-my Blob $font-buf = .IO with @sources.first;
+my Blob $font-buf = .Blob with @sources.first;
 
 ```
 
