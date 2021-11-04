@@ -1,5 +1,6 @@
 use Test;
 
+use CSS::Font;
 use CSS::Font::Resources;
 use CSS::Font::Resources::Source;
 use CSS::Font::Descriptor;
@@ -40,7 +41,7 @@ if %*ENV<TEST_FONT_CONFIG> {
     $font = "bold 12pt times roman, serif";
     $font-loader .= new: :$font, :@font-face, :base-url<t/>;
     @sources = $font-loader.sources;
-    is +@sources, 3;
+    is +@sources, 2;
     given @sources.head {
         .&isa-ok: 'CSS::Font::Resources::Source::Local';
         .family.&is: 'serif';
@@ -50,6 +51,15 @@ if %*ENV<TEST_FONT_CONFIG> {
         .IO.&isa-ok: IO::Path;
         .Blob.&isa-ok: Blob;
     }
+}
+
+if %*ENV<TEST_FONT_CONFIG> {
+    my CSS::Properties $css .= new: :style("font-weight:bold");
+    my CSS::Font $generic-bold .= new: :$css;
+    @sources = CSS::Font::Resources.sources: :font($generic-bold), :@font-face;
+
+    is +@sources, 1;
+    is @sources.head.fontconfig-pattern, 'times-roman:weight=bold', 'generic bold';
 }
 
 @decls = (

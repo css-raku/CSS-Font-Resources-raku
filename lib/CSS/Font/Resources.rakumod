@@ -11,6 +11,7 @@ use CSS::Module::CSS3;
 use JSON::Fast;
 use URI;
 has CSS::Font:D() $.font is required;
+has Str $.font-family = 'times-roman';
 has $.formats = FontFormat;
 has CSS::Font::Descriptor @.font-face;
 has URI() $.base-url = './';
@@ -93,7 +94,7 @@ multi method sources(
     }
 
     if $fallback {
-        for $!font.family -> $family {
+        given $!font.family.head // $!font-family -> $family {
             my CSS::Font::Descriptor $font-descriptor .= new;
             $font-descriptor.css.copy($!font.css);
             $font-descriptor.css.font-family = $family;

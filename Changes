@@ -1,6 +1,9 @@
 Revision history for CSS-Font-Resources
 
 {{$NEXT}}
+    - Provide a default font-family. This ensures that we can load a font,
+      even if the `font-family` property is missing. Arbitrarily set to
+      'serif', but can be overridden.
 
 0.0.6  2021-11-04T12:43:16+13:00
     - Add source() method; singular fetch of sources()
