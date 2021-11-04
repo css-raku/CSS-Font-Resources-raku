@@ -1,5 +1,5 @@
 #| Lightweight CSS Font Resource Manager
-unit class CSS::Font::Resources:ver<0.0.5>;
+unit class CSS::Font::Resources:ver<0.0.6>;
 
 use CSS::Properties::Calculator :FontWeight;
 use CSS::Font::Descriptor;
@@ -116,3 +116,7 @@ multi method sources(
 These matches are ordered by user preference. The fonts themselves can be fetched using the `.IO` or `.Str` or Blob methods
 on the first matching font.
 =end pod
+
+method source(|c --> CSS::Font::Resources::Source) handles<IO> {
+    @.sources(|c).head // CSS::Font::Resources::Source;
+}

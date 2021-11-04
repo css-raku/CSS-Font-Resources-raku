@@ -2,6 +2,9 @@ Revision history for CSS-Font-Resources
 
 {{$NEXT}}
 
+0.0.6  2021-11-04T12:43:16+13:00
+    - Add source() method; singular fetch of sources()
+
 0.0.5  2021-09-25T08:26:47+12:00
     - Bypass fontconfig dependent tests by default. Setting $TEST_FONT_CONFIG
       re-enables these tests. This is sufficient for tests to pass on Windows.
