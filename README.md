@@ -88,4 +88,45 @@ my Blob $font-buf = .Blob with @sources.first;
 
 ```
 
-The most important method is `sources` which returns a list of matching fonts of type CSS::Font::Resources::Source, ordered by preference.
+## Methods
+
+### new
+
+    method new(
+        CSS::Font:D() :$font!,
+        CSS::Font::Descriptor :@font-face,
+        URI() $.base-url = './',
+        :$formats = 'woff'|'woff2'|'truetype'|'opentype'|'embedded-opentype'|'postscript'|'svg'|'cff',
+        --> CSS::Font::Resources
+    )
+
+Returns a new font selector object for the given font and font-descriptor list.
+
+- `$base-url` is used to compute absolute URI's for relative font `src` urls.
+
+- `$formats` is used to filter fonts to a specific format,
+
+### sources
+
+    multi method sources(
+        CSS::Font::Resources:D:
+        Bool :$fallback = True
+    )
+
+    multi method sources(
+        CSS::Font::Resources:U:
+        :$font, :@font-face, :$base-url, :$formats,
+        Bool :$fallback = True,
+    )
+
+Returns a list of matching fonts of type CSS::Font::Resources::Source, ordered by preference.
+
+- `$fallback` return a system font source, if there are no matching font-descriptors.
+
+
+## source
+
+    method source(|c --> CSS::Font::Resources::Source);
+
+Returns the first matching source.
+
