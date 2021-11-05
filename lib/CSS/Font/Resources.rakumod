@@ -8,7 +8,6 @@ use CSS::Font::Resources::Source::Local;
 use CSS::Font::Resources::Source::Url;
 use CSS::Module::CSS3;
 
-use JSON::Fast;
 use URI;
 has CSS::Font:D() $.font is required;
 has Str $.font-family = 'times-roman';
