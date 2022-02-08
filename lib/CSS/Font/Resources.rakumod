@@ -25,30 +25,6 @@ This is lightweight font resource manager, driven by CSS `@font-face` font descr
 
 =end pod
 
-method !fc-stretch {
-    my constant %Stretch = %(
-        :normal(100),
-        :semi-expanded(113), :expanded(125), :extra-expanded(150), :ultra-expanded(200),
-        :semi-condensed(87), :condensed(75), :extra-condensed(63), :ultra-condensed(50),
-    );
-
-    %Stretch{$.stretch};
-}
-
-#| compute a pattern hash for the font
-method pattern returns Hash {
-    $!font.pattern(self!local-fonts());
-}
-
-#| compute a font-config pattern string for the font
-method fontconfig-pattern returns Str {
-    $!font.fontconfig-pattern(self!local-fonts());
-}
-
-method !local-fonts() {
-    @.match(@!font-face)>>.src>>.[0]>>.grep({.type eq 'local'}).Slip;
-}
-
 #| Return only matching font-descriptors
 method match(@font-face = @!font-face) {
     $!font.match(@font-face);
@@ -93,6 +69,7 @@ multi method sources(
     }
 
     if $fallback {
+        # if none of the @font-face rules match, match the font itself
         given $!font.family.head // $!font-family -> $family {
             my CSS::Font::Descriptor $font-descriptor .= new;
             $font-descriptor.css.copy($!font.css);
