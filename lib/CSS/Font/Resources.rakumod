@@ -2,11 +2,11 @@
 unit class CSS::Font::Resources:ver<0.0.7>;
 
 use CSS::Properties::Calculator :FontWeight;
+use CSS::Font;
 use CSS::Font::Descriptor;
 use CSS::Font::Resources::Source :FontFormat, :&guess-format;
 use CSS::Font::Resources::Source::Local;
 use CSS::Font::Resources::Source::Url;
-use CSS::Module::CSS3;
 
 use URI;
 has CSS::Font:D() $.font is required;
