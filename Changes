@@ -2,6 +2,9 @@ Revision history for CSS-Font-Resources
 
 {{$NEXT}}
 
+0.0.8  2022-02-10T08:00:42+13:00
+    - Remove fontconfig-pattern() and pattern() methods
+
 0.0.7  2021-11-06T06:15:48+13:00
     - Provide a default font-family. This ensures that we can load a font,
       even if the `font-family` property is missing. Arbitrarily set to

@@ -16,22 +16,6 @@ This is lightweight font resource manager, driven by CSS `@font-face` font descr
 Methods
 -------
 
-### method pattern
-
-```raku
-method pattern() returns Hash
-```
-
-compute a pattern hash for the font
-
-### method fontconfig-pattern
-
-```raku
-method fontconfig-pattern() returns Str
-```
-
-compute a font-config pattern string for the font
-
 ### method match
 
 ```raku
