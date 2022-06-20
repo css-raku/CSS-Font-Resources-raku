@@ -4,10 +4,10 @@ DocLinker=../$(DocProj)/etc/resolve-links.raku
 
 all : doc
 
-test : all
+test :
 	@prove -e"raku -I ." t
 
-loudtest : all
+loudtest :
 	@prove -e"raku -I ." -v t
 
 $(DocLinker) :

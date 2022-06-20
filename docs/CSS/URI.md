@@ -1,10 +1,10 @@
 [[Raku CSS Project]](https://css-raku.github.io)
  / [[CSS-Font-Resources]](https://css-raku.github.io/CSS-Font-Resources-raku)
 
-class CSS::URI
+role CSS::URI;
 --------------
 
-lightweight fetchable URI's
+Punnable role for lightweight fetchable URI's
 
 Description
 -----------

@@ -1,75 +1,72 @@
-#| lightweight fetchable URI's
-unit class CSS::URI;
+=begin pod
+=head2 role CSS::URI
 
-role X {...}
-also does X;
+Punnable role for lightweight fetchable URI's
+=end pod
+unit role CSS::URI;
 
-role X {
+use URI;
+use LWP::Simple;
+use Temp::Path;
 
-    use URI;
-    use LWP::Simple;
-    use Temp::Path;
+has URI:D() $.url is required handles<Str>;
+has IO::Path $!path;
 
-    has URI:D() $.url is required handles<Str>;
-    has IO::Path $!path;
+submethod TWEAK(URI() :$base-url) {
+    $!url .= rel2abs($_) with $base-url;
+}
 
-    submethod TWEAK(URI() :$base-url) {
-        $!url .= rel2abs($_) with $base-url;
-    }
-
-    method Blob {
-        given $!url.scheme {
-            when 'file'|'' {
-                $.IO.slurp: :bin;
-            }
-            when 'http'|'https' {
-                temp LWP::Simple.force_no_encoding = True;
-                LWP::Simple.get: $!url;
-            }
-            default {
-                die "unsupported URI scheme: $_";
-            }
+method Blob {
+    given $!url.scheme {
+        when 'file'|'' {
+            $.IO.slurp: :bin;
+        }
+        when 'http'|'https' {
+            temp LWP::Simple.force_no_encoding = True;
+            LWP::Simple.get: $!url;
+        }
+        default {
+            die "unsupported URI scheme: $_";
         }
     }
+}
 
-    method IO {
-        given $!url.scheme {
-            when 'file'|'' {
-                if $!url.host -> $host {
-                    die "unable to fetch {$!url.Str} from host: $host"
-                }
-                $!url.path.Str.IO;
+method IO {
+    given $!url.scheme {
+        when 'file'|'' {
+            if $!url.host -> $host {
+                die "unable to fetch {$!url.Str} from host: $host"
             }
-            when 'http'|'https' {
-                $!path //= do {
-                    my $content = self.Blob;
-                    my $suffix = $!url.path.segments.tail;
-                    make-temp-path :$content, :$suffix;
-                }
-            }
-            default {
-                die "unsupported URI scheme: $_";
+            $!url.path.Str.IO;
+        }
+        when 'http'|'https' {
+            $!path //= do {
+                my $content = self.Blob;
+                my $suffix = $!url.path.segments.tail;
+                make-temp-path :$content, :$suffix;
             }
         }
-    }
-
-    method get {
-        given $!url.scheme {
-            when 'file'|'' {
-                if $!url.host -> $host {
-                    die "file fetch from host is nyi: {$!url.Str}";
-                }
-                self.IO.slurp;
-            }
-            when 'http'|'https' {
-                LWP::Simple.get: $!url;
-            }
-            default {
-                die "unsupported URI scheme: $_";
-            }
+        default {
+            die "unsupported URI scheme: $_";
         }
     }
+}
 
+method get returns Str {
+    given $!url.scheme {
+        when 'file'|'' {
+            if $!url.host -> $host {
+                die "file fetch from host is nyi: {$!url.Str}";
+            }
+            self.IO.slurp;
+        }
+        when 'http'|'https' {
+            LWP::Simple.get: $!url;
+        }
+        default {
+            die "unsupported URI scheme: $_";
+        }
+    }
 }
 
 =begin pod

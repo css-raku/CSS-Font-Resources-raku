@@ -4,7 +4,7 @@ use CSS::URI;
 #| URL source references
 unit class CSS::Font::Resources::Source::Url
     is CSS::Font::Resources::Source
-    does CSS::URI::X;
+    does CSS::URI;
 
 method type {'url'}
 

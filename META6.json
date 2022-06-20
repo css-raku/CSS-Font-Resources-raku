@@ -1,5 +1,5 @@
 {
-  "auth": "cpan:WARRINGD",
+  "auth": "zef:dwarring",
   "authors": [
     "David Warring"
   ],
@@ -32,5 +32,5 @@
   "test-depends": [
     "JSON::Fast"
   ],
-  "version": "0.0.8"
+  "version": "0.0.9"
 }
