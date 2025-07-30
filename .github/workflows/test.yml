@@ -28,6 +28,8 @@ jobs:
       - name: Install Dependencies
         run: |
           zef install --/test App::Prove6
+          zef install --deps-only LWP::Simple
+          zef install --verbose --force LWP::Simple
           zef install --deps-only .
       - name: Run Tests
         run: prove6 -I. t
