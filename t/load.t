@@ -1,7 +1,6 @@
 use Test;
 plan 7;
 use CSS::Font::Resources;
-use CSS::Properties;
 use CSS::Font::Descriptor;
 
 my @decls = q:to<END>.split(/^^'---'$$/);
