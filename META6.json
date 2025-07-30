@@ -24,7 +24,7 @@
   },
   "resources": [
   ],
-  "source-url": "git://github.com/css-raku/CSS-Font-Resources-raku.git",
+  "source-url": "https://github.com/css-raku/CSS-Font-Resources-raku.git",
   "tags": [
     "css",
     "font"

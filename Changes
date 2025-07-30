@@ -2,6 +2,9 @@ Revision history for CSS-Font-Resources
 
 {{$NEXT}}
 
+0.0.9  2025-07-30T15:52:47+12:00
+    -Fix t/load.t for latest Rakudo
+
 0.0.9  2022-06-21T10:01:28+12:00
     - Change CSS::URI from a class to a (punnable) role.
     - upload to zef ecosystem
