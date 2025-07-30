@@ -3,7 +3,7 @@ unit class CSS::Font::Resources::Source;
 
 use CSS::Font::Descriptor;
 
-my constant %Extensions = %( :woff<woff>, :woff2<woff2>, 'ttf'|'ttc' => 'truetype', :otf<opentype>, :eot<embedded-opentype>, 'svg'|'svg2' => 'svg', 'pfa'|'pfb' => 'postscript', 'cff' => 'cff');
+my constant %Extensions = %( :woff<woff>, :woff2<woff2>, 'ttf'|'ttc' => 'truetype', 'otf'|'otc' => 'opentype', :eot<embedded-opentype>, 'svg'|'svg2' => 'svg', 'pfa'|'pfb' => 'postscript', 'cff' => 'cff');
 subset FontFormat is export(:FontFormat) of Str where 'woff'|'woff2'|'truetype'|'opentype'|'embedded-opentype'|'postscript'|'svg'|'cff'|Str:U;
 subset WebFontFormat of FontFormat where 'woff'|'woff2'|'truetype'|'opentype'|'embedded-opentype'|'svg'|Str:U;
 
